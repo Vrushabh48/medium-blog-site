@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { sign, verify } from "hono/jwt";
-import {createPostInput, updatePostInput} from '@vrushabhpatil48/common-app'
+import {createPostInput, updatePostInput} from '@vrushabhpatil48/inputvalidation'
 
 export const blogRouter = new Hono<{
 	Bindings: {

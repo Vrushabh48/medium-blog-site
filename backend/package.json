@@ -8,6 +8,8 @@
     "@prisma/client": "^5.20.0",
     "@prisma/extension-accelerate": "^1.2.0",
     "@vrushabhpatil48/common-app": "^1.1.0",
+    "@vrushabhpatil48/inputvalidation": "^1.0.0",
+    "backend": "file:",
     "hono": "^4.6.3",
     "prisma": "^5.20.0"
   },
