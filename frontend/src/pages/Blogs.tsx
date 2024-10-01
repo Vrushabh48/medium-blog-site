@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom"; // Import Link from React Router
+import { Link } from "react-router-dom";
 
 interface Blog {
   id: string;
@@ -8,6 +8,7 @@ interface Blog {
   content: string;
   category: string;
   authorId: string;
+  imageUrl?: string; // Optional image property
 }
 
 export const Blogs = () => {
@@ -42,13 +43,31 @@ export const Blogs = () => {
   }, []);
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">All the blogs here</h1>
-      <div className="grid gap-4">
+    <div className="p-8 bg-gradient-to-r from-blue-200 to-green-200 min-h-screen">
+      <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-800">Explore Our Blogs</h1>
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {blogs.map((blog) => (
-          <Link to={`/blog/${blog.id}`} key={blog.id} className="border p-4 rounded shadow-md hover:shadow-lg transition-shadow">
-            <h2 className="text-xl font-semibold">{blog.title}</h2>
-            <p className="text-gray-500">Category: {blog.category}</p>
+          <Link 
+            to={`/blog/${blog.id}`} 
+            key={blog.id} 
+            className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow transform hover:-translate-y-1 duration-200 ease-in-out"
+          >
+            {/* Optional Image */}
+            {blog.imageUrl && (
+              <img 
+                src={blog.imageUrl} 
+                alt={blog.title} 
+                className="w-full h-48 object-cover rounded-t-lg" 
+              />
+            )}
+            <div className="p-4">
+              <h2 className="text-2xl font-semibold text-gray-900">{blog.title}</h2>
+              <p className="text-sm text-gray-500 mt-1">By Author ID: {blog.authorId}</p>
+              <span className="inline-block mt-2 px-2 py-1 text-xs font-bold text-white bg-blue-500 rounded-full">
+                {blog.category}
+              </span>
+              <p className="text-gray-700 mt-3">{blog.content.substring(0, 100)}...</p>
+            </div>
           </Link>
         ))}
       </div>
