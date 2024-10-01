@@ -29,6 +29,7 @@ userRouter.post('/signup',async (c) => {
 			data: {
 				email: body.email,
         name: body.name,
+        info: body.info,
 				password: body.password
 			}
 		});
