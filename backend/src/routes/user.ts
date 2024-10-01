@@ -3,6 +3,7 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { sign,verify } from "hono/jwt";
 import {signinInput, signupInput } from '@vrushabhpatil48/inputvalidation'
+import { cors } from "hono/cors";
 
 export const userRouter = new Hono<{
 	Bindings: {
@@ -13,6 +14,13 @@ export const userRouter = new Hono<{
 		userId: string
 	}
 }>();
+
+userRouter.use(cors({
+  origin: '*', // Allows all origins, you can specify a specific origin if needed
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  allowHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+}));
+
 
 userRouter.post('/signup',async (c) => {
   const prisma = new PrismaClient({
@@ -55,7 +63,8 @@ const { success } = signinInput.safeParse(body);
   }
 const user = await prisma.user.findUnique({
   where: {
-    email: body.email
+    email: body.email,
+    password: body.password
   }
 });
 

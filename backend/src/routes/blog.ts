@@ -3,6 +3,7 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { sign, verify } from "hono/jwt";
 import {createPostInput, updatePostInput} from '@vrushabhpatil48/inputvalidation'
+import { cors } from 'hono/cors';  // Import cors middleware
 
 export const blogRouter = new Hono<{
 	Bindings: {
@@ -13,6 +14,12 @@ export const blogRouter = new Hono<{
 		userId: string
 	}
 }>();
+
+blogRouter.use(cors({
+    origin: '*', // Allows all origins, you can specify a specific origin if needed
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+    allowHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  }));
 
 blogRouter.use(async (c, next) => {
     const jwt = c.req.header('Authorization');
@@ -100,5 +107,3 @@ blogRouter.post('/',async (c) => {
 
 	return c.json(posts);
 })
-
-  
