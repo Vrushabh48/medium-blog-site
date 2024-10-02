@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Footer } from "../components/Footer";
 
 export const Createblog = () => {
   const [title, setTitle] = useState("");
@@ -48,7 +49,7 @@ export const Createblog = () => {
     <div className="h-screen flex flex-col bg-gray-50 p-8">
       {/* Top Bar */}
       <header className="flex justify-between items-center mb-8">
-        <div className="text-xl font-bold text-gray-700">Draft in Kings</div>
+        <div className="text-xl font-bold text-gray-700 font-serif">Medium</div>
         <button
           onClick={handleClick}
           className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition"
@@ -84,6 +85,7 @@ export const Createblog = () => {
           className="text-lg w-full bg-transparent border-b-2 border-gray-200 focus:border-indigo-600 focus:outline-none h-96 p-3 placeholder-gray-400"
         />
       </main>
+      <Footer />
     </div>
   );
 };

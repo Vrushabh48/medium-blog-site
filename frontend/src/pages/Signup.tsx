@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Label } from "../components/Label";
@@ -12,6 +12,7 @@ export const Signup = () => {
     const [email, setEmail] = useState("");
     const [info, setInfo] = useState("");
     const [password, setPassword] = useState("");
+    const [isVisible, setIsVisible] = useState(false); // State to control visibility for the transition
 
     const navigate = useNavigate();
 
@@ -38,17 +39,14 @@ export const Signup = () => {
                 localStorage.setItem("token", response.data.jwt);
                 toast.success("Signup successful! You are now logged in.");
                 navigate('/blogs')
-                // Optionally redirect or perform other actions here
             } else {
                 toast.error("Signup successful, but no token received.");
             }
         } catch (error) {
-            // Handle error based on error response
             if (axios.isAxiosError(error)) {
                 const errorMessage = error.response?.data?.error || "Signup failed. Please try again.";
                 console.error("Signup Error:", errorMessage);
                 toast.error(errorMessage); // Use toast instead of alert
- // Show the specific error message to the user
             } else {
                 console.error("Unexpected Error:", error);
                 toast.error("An unexpected error occurred. Please try again later.");
@@ -56,65 +54,70 @@ export const Signup = () => {
         }
     };
 
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 h-screen">
-        {/* Left Section - Signup Form */}
-        <div className="flex justify-center items-center bg-gray-100 p-8">
-          <div className="w-full max-w-md space-y-6 p-8">
-            <h2 className="text-4xl font-bold text-center">Create an account</h2>
-            <h3 className="font-light text-center">Already have an account? Sign in</h3>
-            <form className="space-y-4">
-              <div>
-                <Label label="Name"/>
-                <Input 
-                  type="text" 
-                  placeholder="Enter Your name" 
-                  value={name} 
-                  onChange={(e) => setName(e.target.value)} 
-                />
-              </div>
-              <div>
-                <Label label="Info"/>
-                <Input 
-                  type="text" 
-                  placeholder="Enter Your Info" 
-                  value={info} 
-                  onChange={(e) => setInfo(e.target.value)} 
-                />
-              </div>
-              <div>
-                <Label label="Email"/>
-                <Input 
-                  type="email" 
-                  placeholder="Enter Your Email" 
-                  value={email} 
-                  onChange={(e) => setEmail(e.target.value)} 
-                />
-              </div>
-              <div>
-                <Label label="Password"/>
-                <Input 
-                  type="password" 
-                  placeholder="Enter Your Password" 
-                  value={password} 
-                  onChange={(e) => setPassword(e.target.value)} 
-                />
-              </div>
-              <Button onClick={handleSignup} btnname="Signup"/>
-            </form>
-            <ToastContainer position="top-right" autoClose={5000} hideProgressBar />
-          </div>
-        </div>
+    useEffect(() => {
+        // Set the component as visible after it mounts
+        setIsVisible(true);
+    }, []);
 
-        {/* Right Section - Quote */}
-        <div className="flex items-center bg-slate-200 p-8">
-          <div className="text-left">
-            <h1 className="text-4xl font-extrabold p-3">
-              "Write. Rewrite. When not writing or rewriting, read. I know of no shortcuts."
-            </h1>
-            <h3 className="font-light p-3 text-lg">Lary King, American Author</h3>
-          </div>
+    return (
+        <div className={`grid grid-cols-1 md:grid-cols-2 h-screen transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+            {/* Left Section - Signup Form */}
+            <div className="flex justify-center items-center bg-gray-100 p-8">
+                <div className="w-full max-w-md space-y-6 p-8">
+                    <h2 className="text-4xl font-bold text-center">Create an account</h2>
+                    <h3 className="font-light text-center">Already have an account? Sign in</h3>
+                    <form className="space-y-4">
+                        <div>
+                            <Label label="Name" />
+                            <Input
+                                type="text"
+                                placeholder="Enter Your name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <Label label="Info" />
+                            <Input
+                                type="text"
+                                placeholder="Enter Your Info"
+                                value={info}
+                                onChange={(e) => setInfo(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <Label label="Email" />
+                            <Input
+                                type="email"
+                                placeholder="Enter Your Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <Label label="Password" />
+                            <Input
+                                type="password"
+                                placeholder="Enter Your Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+                        <Button onClick={handleSignup} btnname="Signup" />
+                    </form>
+                    <ToastContainer position="top-right" autoClose={5000} hideProgressBar />
+                </div>
+            </div>
+
+            {/* Right Section - Quote */}
+            <div className="flex items-center bg-slate-200 p-8">
+                <div className="text-left">
+                    <h1 className="text-4xl font-extrabold p-3">
+                        "Write. Rewrite. When not writing or rewriting, read. I know of no shortcuts."
+                    </h1>
+                    <h3 className="font-light p-3 text-lg">Lary King, American Author</h3>
+                </div>
+            </div>
         </div>
-      </div>
     );
 };
