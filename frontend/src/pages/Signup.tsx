@@ -26,6 +26,7 @@ export const Signup = () => {
         console.log("Password:", password);
     
         try {
+          //axios post request to signup
             const response = await axios.post("https://backend.vrushabhpatil4801.workers.dev/api/v1/user/signup", {
                 name: name,
                 info: info,
@@ -33,12 +34,10 @@ export const Signup = () => {
                 password: password
             });
     
-            // Assuming the response contains a JWT token
             if (response.data.jwt) {
-                // Store the token in localStorage
                 localStorage.setItem("token", response.data.jwt);
                 toast.success("Signup successful! You are now logged in.");
-                navigate('/blogs')
+                navigate('/blogs');
             } else {
                 toast.error("Signup successful, but no token received.");
             }
@@ -61,17 +60,20 @@ export const Signup = () => {
 
     return (
         <div className={`grid grid-cols-1 md:grid-cols-2 h-screen transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-            {/* Left Section - Signup Form */}
-            <div className="flex justify-center items-center bg-gray-100 p-8">
-                <div className="w-full max-w-md space-y-6 p-8">
-                    <h2 className="text-4xl font-bold text-center">Create an account</h2>
-                    <h3 className="font-light text-center">Already have an account? Sign in</h3>
+            <div className="flex justify-center items-center bg-gray-100 p-6 sm:p-8">
+                <div className="w-full max-w-md space-y-6 p-6 sm:p-8">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">
+                        Create an account
+                    </h2>
+                    <h3 className="font-light text-center text-sm sm:text-base md:text-lg">
+                        Already have an account? Sign in
+                    </h3>
                     <form className="space-y-4">
                         <div>
                             <Label label="Name" />
                             <Input
                                 type="text"
-                                placeholder="Enter Your name"
+                                placeholder="Enter Your Name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
@@ -109,13 +111,14 @@ export const Signup = () => {
                 </div>
             </div>
 
-            {/* Right Section - Quote */}
-            <div className="flex items-center bg-slate-200 p-8">
+            <div className="hidden md:flex items-center bg-slate-200 p-6 sm:p-8">
                 <div className="text-left">
-                    <h1 className="text-4xl font-extrabold p-3">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold p-3">
                         "Write. Rewrite. When not writing or rewriting, read. I know of no shortcuts."
                     </h1>
-                    <h3 className="font-light p-3 text-lg">Lary King, American Author</h3>
+                    <h3 className="font-light p-3 text-base sm:text-lg">
+                        Lary King, American Author
+                    </h3>
                 </div>
             </div>
         </div>

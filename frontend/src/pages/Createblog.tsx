@@ -19,12 +19,13 @@ export const Createblog = () => {
         return;
       }
 
+      //axios post request to publish a blog
       const response = await axios.post(
         "https://backend.vrushabhpatil4801.workers.dev/api/v1/blog",
         {
           title: title,
           content: content,
-          category: category
+          category: category,
         },
         {
           headers: {
@@ -33,8 +34,8 @@ export const Createblog = () => {
         }
       );
 
-      console.log(response.data); // Log the response data for debugging or confirmation
-      // Reset the form fields after successful submission
+      //after successful response, everything is set to empty
+      console.log(response.data);
       setTitle("");
       setContent("");
       setCategory("");
@@ -46,9 +47,8 @@ export const Createblog = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50 p-8">
-      {/* Top Bar */}
-      <header className="flex justify-between items-center mb-8">
+    <div className="min-h-screen flex flex-col bg-gray-50 p-4 sm:p-8">
+      <header className="flex justify-between items-center mb-6">
         <div className="text-xl font-bold text-gray-700 font-serif">Medium</div>
         <button
           onClick={handleClick}
@@ -58,9 +58,7 @@ export const Createblog = () => {
         </button>
       </header>
 
-      {/* Main Content */}
-      <main className="flex flex-col max-w-4xl mx-auto space-y-6">
-        {/* Title Input */}
+      <main className="flex flex-col max-w-3xl mx-auto space-y-4 sm:space-y-6">
         <input
           type="text"
           placeholder="Title"
@@ -74,10 +72,8 @@ export const Createblog = () => {
           placeholder="Category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="text-2xl font-semibold w-full h-10 bg-transparent border-b-2 border-gray-200 focus:border-indigo-600 focus:outline-none p-3 placeholder-gray-400"
+          className="text-2xl font-semibold w-full h-12 bg-transparent border-b-2 border-gray-200 focus:border-indigo-600 focus:outline-none p-3 placeholder-gray-400"
         />
-
-        {/* Story Input */}
         <textarea
           placeholder="Tell your story..."
           value={content}
@@ -85,6 +81,7 @@ export const Createblog = () => {
           className="text-lg w-full bg-transparent border-b-2 border-gray-200 focus:border-indigo-600 focus:outline-none h-96 p-3 placeholder-gray-400"
         />
       </main>
+
       <Footer />
     </div>
   );
